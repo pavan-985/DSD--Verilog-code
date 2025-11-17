@@ -324,8 +324,320 @@ Schmetic:
 <img width="648" height="356" alt="image" src="https://github.com/user-attachments/assets/d593792e-a5f9-4e49-aa69-c837a4e4d200" />
 
 
+------------------------------------------------------------------------------------------------------------------------------
+
+Mux 4*1:
+
+<h5>Code:</h5>
+<pre>
+  `timescale 1ns / 1ps
+module mux_41(
+        input S1, S0, I0, I1, I2, I3,
+    output y
+    );
+    assign y = (~S1 & ~S0 & I0) |(~S1 &  S0 & I1) |( S1 & ~S0 & I2) |( S1 &  S0 & I3);
+endmodule
 
 
+</pre>
+
+<h5>Testbench Code:</h5>
+<pre>
+  module mux_41_tb(
+
+    );
+    
+    reg S1, S0, I0, I1, I2, I3;
+    wire y;
+
+    mux_41 dut (S1, S0, I0, I1, I2, I3, y);
+
+  initial begin
+    S1=0; S0=0; I0=0; I1=0; I2=0; I3=0; #10;
+    S1=0; S0=0; I0=0; I1=0; I2=0; I3=1; #10;
+    S1=0; S0=0; I0=0; I1=0; I2=1; I3=0; #10;
+    S1=0; S0=0; I0=0; I1=0; I2=1; I3=1; #10;
+    S1=0; S0=0; I0=0; I1=1; I2=0; I3=0; #10;
+    S1=0; S0=0; I0=0; I1=1; I2=0; I3=1; #10;
+    S1=0; S0=0; I0=0; I1=1; I2=1; I3=0; #10;
+    S1=0; S0=0; I0=0; I1=1; I2=1; I3=1; #10;
+    S1=0; S0=0; I0=1; I1=0; I2=0; I3=0; #10;
+    S1=0; S0=0; I0=1; I1=0; I2=0; I3=1; #10;
+    S1=0; S0=0; I0=1; I1=0; I2=1; I3=0; #10;
+    S1=0; S0=0; I0=1; I1=0; I2=1; I3=1; #10;
+    S1=0; S0=0; I0=1; I1=1; I2=0; I3=0; #10;
+    S1=0; S0=0; I0=1; I1=1; I2=0; I3=1; #10;
+    S1=0; S0=0; I0=1; I1=1; I2=1; I3=0; #10;
+    S1=0; S0=0; I0=1; I1=1; I2=1; I3=1; #10;
+    S1=0; S0=1; I0=0; I1=0; I2=0; I3=0; #10;
+    S1=0; S0=1; I0=0; I1=0; I2=0; I3=1; #10;
+    S1=0; S0=1; I0=0; I1=0; I2=1; I3=0; #10;
+    S1=0; S0=1; I0=0; I1=0; I2=1; I3=1; #10;
+    S1=0; S0=1; I0=0; I1=1; I2=0; I3=0; #10;
+    S1=0; S0=1; I0=0; I1=1; I2=0; I3=1; #10;
+    S1=0; S0=1; I0=0; I1=1; I2=1; I3=0; #10;
+    S1=0; S0=1; I0=0; I1=1; I2=1; I3=1; #10;
+    S1=0; S0=1; I0=1; I1=0; I2=0; I3=0; #10;
+    S1=0; S0=1; I0=1; I1=0; I2=0; I3=1; #10;
+    S1=0; S0=1; I0=1; I1=0; I2=1; I3=0; #10;
+    S1=0; S0=1; I0=1; I1=0; I2=1; I3=1; #10;
+    S1=0; S0=1; I0=1; I1=1; I2=0; I3=0; #10;
+    S1=0; S0=1; I0=1; I1=1; I2=0; I3=1; #10;
+    S1=0; S0=1; I0=1; I1=1; I2=1; I3=0; #10;
+    S1=0; S0=1; I0=1; I1=1; I2=1; I3=1; #10;
+    S1=1; S0=0; I0=0; I1=0; I2=0; I3=0; #10;
+    S1=1; S0=0; I0=0; I1=0; I2=0; I3=1; #10;
+    S1=1; S0=0; I0=0; I1=0; I2=1; I3=0; #10;
+    S1=1; S0=0; I0=0; I1=0; I2=1; I3=1; #10;
+    S1=1; S0=0; I0=0; I1=1; I2=0; I3=0; #10;
+    S1=1; S0=0; I0=0; I1=1; I2=0; I3=1; #10;
+    S1=1; S0=0; I0=0; I1=1; I2=1; I3=0; #10;
+    S1=1; S0=0; I0=0; I1=1; I2=1; I3=1; #10;
+    S1=1; S0=0; I0=1; I1=0; I2=0; I3=0; #10;
+    S1=1; S0=0; I0=1; I1=0; I2=0; I3=1; #10;
+    S1=1; S0=0; I0=1; I1=0; I2=1; I3=0; #10;
+    S1=1; S0=0; I0=1; I1=0; I2=1; I3=1; #10;
+    S1=1; S0=0; I0=1; I1=1; I2=0; I3=0; #10;
+    S1=1; S0=0; I0=1; I1=1; I2=0; I3=1; #10;
+    S1=1; S0=0; I0=1; I1=1; I2=1; I3=0; #10;
+    S1=1; S0=0; I0=1; I1=1; I2=1; I3=1; #10;
+    S1=1; S0=1; I0=0; I1=0; I2=0; I3=0; #10;
+    S1=1; S0=1; I0=0; I1=0; I2=0; I3=1; #10;
+    S1=1; S0=1; I0=0; I1=0; I2=1; I3=0; #10;
+    S1=1; S0=1; I0=0; I1=0; I2=1; I3=1; #10;
+    S1=1; S0=1; I0=0; I1=1; I2=0; I3=0; #10;
+    S1=1; S0=1; I0=0; I1=1; I2=0; I3=1; #10;
+    S1=1; S0=1; I0=0; I1=1; I2=1; I3=0; #10;
+    S1=1; S0=1; I0=0; I1=1; I2=1; I3=1; #10;
+    S1=1; S0=1; I0=1; I1=0; I2=0; I3=0; #10;
+    S1=1; S0=1; I0=1; I1=0; I2=0; I3=1; #10;
+    S1=1; S0=1; I0=1; I1=0; I2=1; I3=0; #10;
+    S1=1; S0=1; I0=1; I1=0; I2=1; I3=1; #10;
+    S1=1; S0=1; I0=1; I1=1; I2=0; I3=0; #10;
+    S1=1; S0=1; I0=1; I1=1; I2=0; I3=1; #10;
+    S1=1; S0=1; I0=1; I1=1; I2=1; I3=0; #10;
+    S1=1; S0=1; I0=1; I1=1; I2=1; I3=1; #10;
+    $finish;
+  end
+endmodule
+
+</pre>
+
+Simultion:
+<img width="752" height="498" alt="image" src="https://github.com/user-attachments/assets/d6e434c8-eca4-4369-aff5-bc1ee191edaf" />
+
+
+
+Schmetic: 
+<img width="647" height="341" alt="image" src="https://github.com/user-attachments/assets/a31d1920-2f29-405a-8ae5-1822a0e41e30" />
+
+
+
+------------------------------------------------------------------------------------------------------------------------------
+Mux 8*1:
+
+<h5>Code:</h5>
+<pre>
+  `timescale 1ns / 1ps
+module mux_81(
+    input I0, I1, I2, I3, I4, I5, I6, I7,
+    input S0, S1, S2,
+    output Y
+    );
+    assign Y =(~S2 & ~S1 & ~S0 & I0) |(~S2 & ~S1 &  S0 & I1) |(~S2 &  S1 & ~S0 & I2) |
+              (~S2 &  S1 &  S0 & I3) |( S2 & ~S1 & ~S0 & I4) |( S2 & ~S1 &  S0 & I5) |
+              ( S2 &  S1 & ~S0 & I6) |( S2 &  S1 &  S0 & I7);
+
+endmodule
+
+</pre>
+
+<h5>Testbench Code:</h5>
+<pre>
+  module mux_81_tb(
+
+    );    
+reg I0, I1, I2, I3, I4, I5, I6, I7;
+reg S0, S1, S2;
+wire Y;
+mux_81 dut (I0, I1, I2, I3, I4, I5, I6, I7, S0, S1, S2, Y);
+initial begin
+I0 = 1;I1 = 0;I2 = 1;I3 = 1;I4 = 0;I5 = 1;I6 = 0;I7 = 1;S2 = 0; S1 = 0; S0 = 0;   
+    #10;
+I0 = 1;I1 = 0;I2 = 1;I3 = 1;I4 = 0;I5 = 1;I6 = 0;I7 = 1; S2 = 0; S1 = 0; S0 = 1;   
+    #10;
+I0 = 1;I1 = 0;I2 = 1;I3 = 1;I4 = 0;I5 = 1;I6 = 0;I7 = 1; S2 = 0; S1 = 1; S0 = 0;   
+    #10;
+I0 = 1;I1 = 0;I2 = 1;I3 = 1;I4 = 0;I5 = 1;I6 = 0;I7 = 1;S2 = 0; S1 = 1; S0 = 1;   
+    #10;
+I0 = 1;I1 = 0;I2 = 1;I3 = 1;I4 = 0;I5 = 1;I6 = 0;I7 = 1;S2 = 1; S1 = 0; S0 = 0;   
+    #10;
+I0 = 1;I1 = 0;I2 = 1;I3 = 1;I4 = 0;I5 = 1;I6 = 0;I7 = 1;S2 = 1; S1 = 0; S0 = 1;   
+    #10;
+I0 = 1;I1 = 0;I2 = 1;I3 = 1;I4 = 0;I5 = 1;I6 = 0;I7 = 1;S2 = 1; S1 = 1; S0 = 0;  
+    #10;
+I0 = 1;I1 = 0;I2 = 1;I3 = 1;I4 = 0;I5 = 1;I6 = 0;I7 = 1;S2 = 1; S1 = 1; S0 = 1;   
+    #10;
+$finish;
+end
+
+endmodule
+
+
+</pre>
+
+Simultion:
+<img width="704" height="492" alt="image" src="https://github.com/user-attachments/assets/edd20649-0aa8-40a9-9f4f-dc9cdbedd821" />
+
+
+
+Schmetic: 
+<img width="822" height="381" alt="image" src="https://github.com/user-attachments/assets/7971b6df-f39f-4c3e-b4d8-fdcd2d181b86" />
+
+
+
+------------------------------------------------------------------------------------------------------------------------------
+
+Decoder:
+
+<h5>Code:</h5>
+<pre>
+  `timescale 1ns / 1ps
+module priority_decoder_24(
+input a,b,
+output d0,d1,d2,d3
+
+    );
+     assign d0 = ~a&(~b);
+    assign d1 = ~a&b;
+    assign d2 = a&(~b);
+    assign d3 = a&b;
+
+endmodule
+
+
+</pre>
+
+<h5>Testbench Code:</h5>
+<pre>
+  module priority_decoder_24_tb(
+
+    );
+     reg a,b;
+    wire d0,d1,d2,d3;
+    
+    priority_decoder_24 dut(a,b,d0,d1,d2,d3);
+    
+    initial 
+    begin 
+    a =0; b=0;
+    #10
+     a =0; b=1;
+    #10
+     a =1; b=0;
+    #10
+     a =1; b=1;
+    #10
+    $finish;
+    end
+
+endmodule
+
+</pre>
+
+Simultion:
+<img width="694" height="497" alt="image" src="https://github.com/user-attachments/assets/0da001a8-2935-4ec5-8cd7-5c967a39ee9a" />
+
+
+
+
+Schmetic: 
+<img width="656" height="469" alt="image" src="https://github.com/user-attachments/assets/fc8753c9-dd2c-4ac9-9b34-d8078a1f5ffa" />
+
+
+
+------------------------------------------------------------------------------------------------------------------------------
+
+Priority Encoder:
+
+<h5>Code:</h5>
+<pre>
+  `timescale 1ns / 1ps
+module priority_encoder_42(
+input d0,d1,d2,d3,
+output a,b,v
+
+    );
+    
+      assign a = d2|d3;
+    assign b=( d1 &(~d2))|d3;
+    assign v = d3|d2|d1|d0;
+
+endmodule
+
+</pre>
+
+<h5>Testbench Code:</h5>
+<pre>
+ module priority_encoder_42_tb(
+
+    );
+    reg d0,d1,d2,d3;
+    wire a,b ,v;
+    
+    priority_encoder_42 dut(d0,d1,d2,d3,a,b,v);
+    
+    initial 
+    begin
+     d0=0; d1=0;d2=0;d3=0;
+    #10
+    d0=1; d1=0;d2=0;d3=0;
+    #10
+    d0=0; d1=1;d2=0;d3=0;
+    #10
+    d0=0; d1=0;d2=1;d3=0;
+    #10
+    d0=0; d1=0;d2=0;d3=1;
+    #10
+    d0=1; d1=1;d2=0;d3=0;
+    #10
+    d0=1; d1=1;d2=1;d3=0;
+    #10
+    d0=1; d1=1;d2=1;d3=1;
+    #10
+    d0=1; d1=0;d2=1;d3=0;
+    #10    
+    d0=1; d1=0;d2=0;d3=1;
+    #10
+    d0=1; d1=0;d2=1;d3=1;
+    #10
+    d0=0; d1=0;d2=1;d3=1;
+    #10
+    d0=0; d1=1;d2=1;d3=1;
+    #10
+    d0=1; d1=1;d2=0;d3=1;
+    #10
+    d0=0; d1=1;d2=1;d3=0;
+    #10
+    d0=0; d1=1;d2=0;d3=1;
+    #10
+    
+  $finish;
+end
+
+endmodule
+
+
+
+</pre>
+
+Simultion:
+<img width="813" height="423" alt="image" src="https://github.com/user-attachments/assets/31480531-2dfa-4d13-bbfa-23d833559df2" />
+
+
+
+Schmetic: 
+<img width="649" height="432" alt="image" src="https://github.com/user-attachments/assets/44c88150-bab9-4ea0-9ec7-e72ab4f8e094" />
 
 
 
