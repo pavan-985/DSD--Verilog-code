@@ -760,6 +760,217 @@ Simultion:
 Schmetic: 
 <img width="661" height="343" alt="image" src="https://github.com/user-attachments/assets/56cfd1b9-7a1f-48c6-808a-1e08a49827fa" />
 
+----------------------------------------------------------------------------------------
+D-flipflop:
+
+<h5>Code:</h5>
+<pre>
+  `timescale 1ns / 1ps
+module D_flipflop(
+    input D,clk,
+    output Q,Qbar
+    
+    );
+ 
+   wire Dbar, S, R;
+
+    assign Dbar = ~D;
+
+    assign #1 S = ~(D    & clk);   
+    assign #1 R = ~(Dbar & clk);   
+
+    assign #1 Q    = ~(S & Qbar);
+    assign #1 Qbar = ~(R & Q);
+endmodule
+
+
+</pre>
+
+<h5>Testbench Code:</h5>
+<pre>
+module D_flipflop_tb(
+
+    );
+    reg D, clk;
+    wire Q, Qbar;
+    
+    D_flipflop dut (D,clk,Q,Qbar);
+
+  
+    initial begin
+        clk = 0;
+        forever #5 clk = ~clk;  
+    end
+
+    
+    initial begin
+        
+
+       
+        D = 0;
+        #10;
+
+        
+        D = 1;  #10;  
+        D = 0;  #10;  
+        D = 1;  #10;  
+        D = 0;  #10;  
+
+       
+        D = 1;  #20;  
+
+        $finish;
+    end
+
+endmodule
+
+</pre>
+
+Simultion:
+<img width="674" height="506" alt="image" src="https://github.com/user-attachments/assets/f64c8f8e-46c6-412f-9491-13ae9adef4c2" />
+
+Schmetic: 
+<img width="648" height="354" alt="image" src="https://github.com/user-attachments/assets/10446c19-2520-4e53-8451-98f7f61e5db7" />
+
+----------------------------------------------------------------------------------------
+JK-flipflop:
+
+<h5>Code:</h5>
+<pre>
+  `timescale 1ns / 1ps
+module JK_flipflop(
+    input J,K,clk,output reg Q,output Qbar
+    );
+    initial Q=0;
+   assign Qbar = ~Q;
+always @(posedge clk) begin
+    case ({J, K})
+        2'b00: Q <= Q;       
+        2'b01: Q <= 1'b0;    
+        2'b10: Q <= 1'b1;    
+        2'b11: Q <= ~Q;      
+    endcase
+end
+
+
+endmodule
+
+
+</pre>
+
+<h5>Testbench Code:</h5>
+<pre>
+module JK_flipflop_tb(
+
+    );
+    reg J, K, clk;
+    wire Q, Qbar;
+
+  
+    JK_flipflop dut (J,K,clk,Q,Qbar);
+
+    
+    initial begin
+        clk = 0;
+        forever #5 clk = ~clk;   
+    end
+
+    
+    initial begin
+        J = 0; K = 0; #10;   
+        J = 1; K = 0; #10;   
+        J = 0; K = 1; #10;   
+        J = 1; K = 1; #10;   
+        J = 1; K = 1; #10;   
+        J = 0; K = 0; #10;  
+        $finish;
+    end
+endmodule
+</pre>
+
+Simultion:
+<img width="691" height="565" alt="image" src="https://github.com/user-attachments/assets/87f3b81f-af19-4cd6-b13b-94a01af26053" />
+
+
+Schmetic: 
+<img width="600" height="455" alt="image" src="https://github.com/user-attachments/assets/adb63ace-4e10-43e4-833a-583a4b69f2d4" />
+
+
+----------------------------------------------------------------------------------------
+T-flipflop:
+
+<h5>Code:</h5>
+<pre>
+  `timescale 1ns / 1ps
+module T_ff(
+    input T,clk,output reg Q,output Qbar
+    );
+    
+    assign Qbar=~Q;
+    initial Q = 0;
+    always @(posedge clk) begin
+        case(T)
+            1'b0: Q <= Q;       
+            1'b1: Q <= ~Q;    
+        endcase
+    end
+endmodule
+
+
+
+</pre>
+
+<h5>Testbench Code:</h5>
+<pre>
+module T_ff_tb(
+
+    );
+    reg T, clk;
+    wire Q, Qbar;
+    T_ff dut(T,clk,Q,Qbar);
+    initial begin
+        clk = 0;
+        forever #5 clk = ~clk;
+    end
+    
+    initial begin
+       
+        T = 0;
+        #10;
+
+        T = 1; #10;   
+        T = 1; #10;   
+        T = 0; #10;   
+        T = 1; #10;   
+        T = 0; #10;   
+        T = 1; #20;   
+
+        $finish;
+    end
+endmodule
+</pre>
+
+Simultion:
+<img width="697" height="525" alt="image" src="https://github.com/user-attachments/assets/7045d315-8682-42fe-a863-77581c04d0e6" />
+
+
+
+Schmetic: 
+<img width="650" height="378" alt="image" src="https://github.com/user-attachments/assets/7cb8ca55-9091-40ce-a01e-0073cc5563a9" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
