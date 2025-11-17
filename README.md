@@ -639,5 +639,128 @@ Simultion:
 Schmetic: 
 <img width="649" height="432" alt="image" src="https://github.com/user-attachments/assets/44c88150-bab9-4ea0-9ec7-e72ab4f8e094" />
 
+------------------------------------------------------------------------------------------
+
+Sr-Latch:
+
+<h5>Code:</h5>
+<pre>
+  `timescale 1ns / 1ps
+module SR_latch(
+    input s,r,output q,qbar
+    );
+    assign #1 q=~(s&qbar);
+    assign #1 qbar=~(r&q);
+endmodule
+
+
+</pre>
+
+<h5>Testbench Code:</h5>
+<pre>
+module SR_latch_tb(
+
+    );
+    
+    reg s, r;
+    wire q, qbar;
+
+    
+    SR_latch dut (s,r, q,qbar );
+
+    initial begin
+       s = 0; r = 0; #10;
+        s = 1; r = 0; #10
+        s = 0; r = 1; #10;
+        s = 1; r = 1; #10;
+
+        $stop;
+    end
+
+endmodule
+
+
+
+</pre>
+
+Simultion:
+<img width="758" height="384" alt="image" src="https://github.com/user-attachments/assets/e915d0e4-1c41-4838-bb3d-cd03bd784d51" />
+
+Schmetic: 
+<img width="724" height="392" alt="image" src="https://github.com/user-attachments/assets/22b3e79b-90b4-4ae9-99a2-d003ba2c1a9d" />
+----------------------------------------------------------------------------------------
+Sr-flipflop:
+
+<h5>Code:</h5>
+<pre>
+  `timescale 1ns / 1ps
+module SR_flipflop(
+    input S, R,clk,
+    output Q, Qbar
+    );
+   wire Sg, Rg;
+assign #1 Sg = ~(S & clk);
+assign #1 Rg = ~(R & clk);
+assign #1 Q = ~(Sg & Qbar);
+assign #1 Qbar = ~(Rg & Q);
+endmodule
+
+
+</pre>
+
+<h5>Testbench Code:</h5>
+<pre>
+module SR_flipflop_tb(
+
+    );
+    reg S, R, clk;
+    wire Q, Qbar;
+
+    
+    SR_flipflop dut (S, R, clk, Q, Qbar);
+
+   
+  initial begin
+  clk=0;
+  forever #5 clk=~clk;
+  end
+
+    initial begin
+    S = 0;
+    R = 0;
+    #10;
+    S = 0;
+    R = 1;
+    #10;
+    S = 0;
+    R = 0;
+    #10;
+    S = 1;
+    R = 0;
+    #10;
+    S = 0;
+    R = 0;
+    #10;
+    S = 1;
+    R = 1;
+    #10;
+
+    $finish;
+    end
+
+endmodule
+
+
+
+</pre>
+
+Simultion:
+<img width="675" height="558" alt="image" src="https://github.com/user-attachments/assets/8da8fb98-cce1-4835-8d01-116b25ab4b16" />
+
+Schmetic: 
+<img width="661" height="343" alt="image" src="https://github.com/user-attachments/assets/56cfd1b9-7a1f-48c6-808a-1e08a49827fa" />
+
+
+
 
 
