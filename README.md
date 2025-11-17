@@ -54,3 +54,56 @@ Simultion:<img width="629" height="482" alt="image" src="https://github.com/user
 
 Schmetic: <img width="560" height="534" alt="image" src="https://github.com/user-attachments/assets/3fe6896b-cca4-4339-8801-418b02c72d60" />
 
+------------------------------------------------------------------------------------------------------------------------------
+
+Boolean Expression:
+
+<h5>Code:</h5>
+<pre>
+  `timescale 1ns / 1ps
+ \module bollean_exp(
+        input A, B, C,
+    output exp_1,exp_2,exp_3
+    );
+    assign exp_1 =(~A & B) |(B & ~C) |(A & C);
+    assign exp_2=(~A & ~B &  C) |(~A &  B &  C) |( A & ~B &  C);
+    assign exp_3 =((A | B | C) & (A | ~B | C) &(~A | ~B | C));
+    
+        
+
+endmodule
+
+</pre>
+
+<h5>Testbench Code:</h5>
+<pre>
+  `timescale 1ns / 1ps
+  module bollean_exp_tb(
+
+    );
+    reg A, B, C;
+     wire exp_1, exp_2, exp_3;
+     bollean_exp dut(A,B,C,exp_1,exp_2,exp_3);
+initial begin
+ 
+    A=0; B=0; C=0; #10;
+    A=0; B=0; C=1; #10;
+    A=0; B=1; C=0; #10;
+    A=0; B=1; C=1; #10;
+    A=1; B=0; C=0; #10;
+    A=1; B=0; C=1; #10;
+    A=1; B=1; C=0; #10;
+    A=1; B=1; C=1; #10;
+
+        $finish;
+    end
+endmodule
+
+</pre>
+
+Simultion:
+<img width="673" height="567" alt="image" src="https://github.com/user-attachments/assets/1910fa9d-b00b-49d1-ac22-15bfc23c8cd3" />
+
+Schmetic: 
+<img width="829" height="475" alt="image" src="https://github.com/user-attachments/assets/8b120cc2-195f-47ba-9c14-ae3b0bb00588" />
+
