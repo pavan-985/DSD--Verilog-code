@@ -638,6 +638,81 @@ Simultion:
 
 Schmetic: 
 <img width="649" height="432" alt="image" src="https://github.com/user-attachments/assets/44c88150-bab9-4ea0-9ec7-e72ab4f8e094" />
+------------------------------------------------------------------------------------------
+
+Universal Adder or Subtractor With overflow check:
+
+<h5>Code:</h5>
+<pre>
+  `timescale 1ns / 1ps
+module full_adder(
+    input  A, B, Cin,
+    output Sum, Cout
+);
+    assign {Cout, Sum} = A + B + Cin;
+endmodule
+module universal_adder(
+    input  [3:0] A, B,
+    input        M,         
+    output [3:0] S,         
+    output       Cout,      
+    output       V          
+);
+
+    wire [3:0] B_mod;
+    wire c1, c2, c3, c4;
+
+    
+    assign B_mod = B ^ {4{M}};
+
+   
+    full_adder FA0 (A[0], B_mod[0], M,  S[0], c1);  
+    full_adder FA1 (A[1], B_mod[1], c1, S[1], c2);
+    full_adder FA2 (A[2], B_mod[2], c2, S[2], c3);
+    full_adder FA3 (A[3], B_mod[3], c3, S[3], c4);
+
+    assign Cout = c4;
+
+    
+    assign V = c4 ^ c3;
+
+endmodule
+
+
+
+
+</pre>
+
+<h5>Testbench Code:</h5>
+<pre>
+module universal_adder_tb(
+
+    );
+    
+    reg  [3:0] A, B;
+    reg        M;
+    wire [3:0] S;
+    wire       Cout, V;
+    universal_adder dut (A, B, M, S, Cout, V);
+    initial begin
+        
+       M = 0;
+        A = 4'b0101; B = 4'b0011; #10;
+        A = 4'b0111; B = 4'b1001; #10;
+       M = 1;
+        A = 4'b1001; B = 4'b0100; #10;
+        A = 4'b0011; B = 4'b1000; #10;
+        $stop;
+    end
+endmodule
+</pre>
+
+Simultion:
+<img width="594" height="331" alt="image" src="https://github.com/user-attachments/assets/8727d7d6-315d-4ddc-9da0-b685138d6ca1" />
+
+
+Schmetic: 
+<img width="593" height="410" alt="image" src="https://github.com/user-attachments/assets/763b8642-e617-453f-9653-296a7b9569ab" />
 
 ------------------------------------------------------------------------------------------
 
