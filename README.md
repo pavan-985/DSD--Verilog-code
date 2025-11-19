@@ -1033,6 +1033,81 @@ Simultion:
 Schmetic: 
 <img width="650" height="378" alt="image" src="https://github.com/user-attachments/assets/7cb8ca55-9091-40ce-a01e-0073cc5563a9" />
 
+----------------------------------------------------------------------------------------
+Counter 0,3,5,6:
+
+<h5>Code:</h5>
+<pre>
+  `timescale 1ns / 1ps
+module t_ff(
+input t,
+input clk,
+input reset,
+output reg q
+    );
+    always @(posedge clk or posedge reset) begin
+    if(reset)//always at posivitive edge
+    q<=1'b0;
+    else if(t)
+    q<=~q;
+    end 
+    
+endmodule
+
+module counter(
+ input clk, reset, output [2:0]q
+);
+wire t0,t1,t2;
+    assign t0=~q[1];
+    assign t1=1;
+    assign t2=q[1];
+    
+     t_ff ff0(t0,clk,reset,q[0]);
+    t_ff ff1(t1,clk,reset,q[1]);
+     t_ff ff2(t2,clk,reset,q[2]);
+endmodule
+
+
+
+</pre>
+
+<h5>Testbench Code:</h5>
+<pre>
+module counter_tb(
+
+    );
+     reg clk,reset;
+    wire [2:0]q;
+    
+    counter uut(clk,reset,q);
+    initial
+    begin
+    clk=0;
+    #5
+    forever #5 clk=~clk;
+    end
+    
+    initial 
+    begin
+    reset =1;
+    #10
+    reset=0;
+    #50
+    $finish;
+    end
+endmodule
+
+
+</pre>
+
+Simultion:
+<img width="607" height="384" alt="image" src="https://github.com/user-attachments/assets/d9b56f29-2f84-46e1-858a-f5a41c722a33" />
+
+
+
+Schmetic: 
+<img width="607" height="536" alt="image" src="https://github.com/user-attachments/assets/6ca4ce07-84ff-42a2-821f-34574f56ca83" />
+
 
 
 
