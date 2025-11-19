@@ -1108,6 +1108,103 @@ Simultion:
 Schmetic: 
 <img width="607" height="536" alt="image" src="https://github.com/user-attachments/assets/6ca4ce07-84ff-42a2-821f-34574f56ca83" />
 
+--------------------------------------------------------------------------------------------------------------
+Counter 0,3,5,6 with lockout:
+
+<h5>Code:</h5>
+<pre>
+  `timescale 1ns / 1ps
+module t_ff(
+    input t,
+    input clk,
+    input reset,
+    output reg q
+    );
+    
+    always @(posedge clk or posedge reset) begin
+        if(reset)
+            q <= 1'b0;
+        else if(t)
+            q <= ~q;
+    end 
+endmodule
+
+module counter_lockout(
+ input clk,
+    input reset,
+    output [2:0] q
+    );
+    
+    wire t0, t1, t2;
+
+
+wire clr_lock = (q[2] ^ q[1] ^ q[0]);
+
+
+wire final_reset = reset | clr_lock;
+
+
+assign t0 = ~q[1];
+assign t1 = 1'b1;
+assign t2 = q[1];
+
+
+t_ff ff0(t0, clk, final_reset, q[0]);
+t_ff ff1(t1, clk, final_reset, q[1]);
+t_ff ff2(t2, clk, final_reset, q[2]);
+
+endmodule
+
+
+
+</pre>
+
+<h5>Testbench Code:</h5>
+<pre>
+module counter_lockout_tb(
+
+    );
+    reg clk;
+reg reset;
+wire [2:0] q;
+
+counter_lockout dut (clk, reset, q);
+
+initial begin
+clk=0;
+forever #5 clk=~clk;
+
+end
+initial begin
+   
+    
+    reset = 1;
+
+    #12 reset = 0;
+    #50;
+
+    reset = 1;
+    #10 reset = 0;
+
+    #100;
+
+    $finish;
+end
+
+endmodule
+
+
+
+</pre>
+
+Simultion:
+<img width="880" height="443" alt="image" src="https://github.com/user-attachments/assets/20a89847-60c9-44f5-bc75-1e539422b7b5" />
+
+
+
+Schmetic: 
+<img width="612" height="485" alt="image" src="https://github.com/user-attachments/assets/7b942eac-b9c0-4115-bfe4-27b79368b6c5" />
+
 
 
 
